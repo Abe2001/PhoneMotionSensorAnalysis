@@ -9,7 +9,8 @@ Then the R script aggregates the data by subject and activity, thus giving 180 r
 
 *** 
 
-1. SubjectID
+Column #1. SubjectID
+
       + definition: Identifier within a group of 30 volunteer subjects whose motion data was recorded while carrying a waist-mounted smartphone with embedded inertial sensors (accelerometer and gyroscope).            
       + value:
           + 1...30
@@ -17,7 +18,8 @@ Then the R script aggregates the data by subject and activity, thus giving 180 r
           
 *** 
 
-2. activityName
+Column #2. activityName
+
       + definition: Each person in subject group performed six activities. This variable shows for each observation in the dataset which activity for each subject the other 66 variables were for.
       + value:
           + 1     WALKING
