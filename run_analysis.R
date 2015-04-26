@@ -2,11 +2,10 @@
 ## Name of the zip file = "getdata-projectfiles-UCI HAR Dataset.zip"
 ## Assume : The user has already unzipped the above file (using Winzip or something like that).
 ## Assume : The contents of the unzipped file are in a folder called "UCI HAR Dataset".
-## Assume : The folder "UCI HAR Dataset" is in the R home directory.
+## Assume : The folder "UCI HAR Dataset" is in the user's R working directory.
 
 
 library(dplyr);
-library(stringr);
 ############################# BEGIN: Read in all the relevant datasets ######################
 ##  Read training data from the unzipped folder
 train_subject <- read.table("./UCI HAR Dataset/train/subject_train.txt", header = FALSE,na.strings = "N/A");
@@ -86,6 +85,7 @@ test_X <- rbind(test_X_split[[1]], test_X_split[[2]], test_X_split[[3]], test_X_
 TestOrTrain <- rep(c("Test"),nrow(test_X) );   ## TestOrTrain vector has the same length as the number of rows in test_X
 test_X <- cbind(TestOrTrain , test_X);              ## test_X has 565 columns
 
+rm("test_X_split");                           ## remove intermediate variable not needed anymore to save memory 
 print("#### COMPLETED: Step 3 For Testing data: Use descriptive activity names");
 ########################### COMPLETED:ASSIGNMENT TASK#3 FOR TEST DATA:Use descriptive activity names to name the activities in the data set #########################################
 
@@ -125,6 +125,7 @@ train_X <- rbind(train_X_split[[1]], train_X_split[[2]], train_X_split[[3]], tra
 TestOrTrain <- rep(c("Train"),nrow(train_X) );   ## TestOrTrain vector has the same length as the number of rows in train_X
 train_X <- cbind(TestOrTrain , train_X);              ## train_X now has 565 columns
 
+rm("train_X_split");                           ## remove intermediate variable not needed anymore to save memory 
 print("#### COMPLETED: Step 3 For Training data: Use descriptive activity names");
 ########################### COMPLETED:ASSIGNMENT TASK#3 FOR TRAIN DATA : Use descriptive activity names to name the activities in the data set #########################################
 
@@ -161,14 +162,14 @@ TidyTrainTestData <- TidyTrainTestData[, names(TidyTrainTestData) %in% FinalTidy
 
 print("#### COMPLETED: Step 2: Extract only mean & std dev measurements");
 ########################### COMPLETED: TASK # 2:Extract only measurements on the mean and std deviation for each measurement #########################################
-
+## COMPLETED TASKS # 1,2,3,4 ########################################################################################
 ## At this point,completed the tasks # 1, 2, 3 and 4 of the assignment as follows (although not done in that order): 
 ## Task#1: DONE: Merge the training and the test sets to create one data set.
 ## Task#2: DONE: Extract only the measurements on the mean and standard deviation for each measurement. 
 ## Task#3: DONE: Use descriptive activity names to name the activities in the data set
 ## Task#4: DONE: Appropriately label the data set with descriptive variable names. 
 
-############ BEGIN: ASSIGNMENT TASK # 5  : From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject.. #########################################
+############ BEGIN: ASSIGNMENT TASK # 5:From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject.. #########################################
 
 TidyDataGrouped <- group_by(TidyTrainTestData, SubjectID, activityName);
 TidyDataSummarised <- summarise_each(TidyDataGrouped, (funs(mean)));
@@ -176,7 +177,7 @@ TidyDataSummarised <- summarise_each(TidyDataGrouped, (funs(mean)));
 #write the summarised tidy data to file (use comma-separated format for easier viewing)
 write.table(TidyDataSummarised,file="tidySummaryData.txt",row.names=FALSE, sep="," );
 print("#### COMPLETED: Step 5: Create a second,independent tidy dataset with the average of each variable for each activity and each subject.");
-print("#### THE FINAL OUTPUT TIDY DATA FILE <tidySummaryData.txt> HAS BEEN WRITTEN TO YOUR R HOME DIRECTORY LOCATION");
+print("#### THE FINAL OUTPUT TIDY DATA FILE <tidySummaryData.txt> HAS BEEN WRITTEN TO YOUR R CURRENT WORKING DIRECTORY LOCATION");
 ############ COMPLETED: ASSIGNMENT TASK # 5  : From the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject. #########################################
 
 
